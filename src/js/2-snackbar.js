@@ -14,20 +14,32 @@ function handlerSubmit(event) {
   const radioStateValue = event.target.elements.state.value;
   //   console.log(radioStateValue);
   event.target.reset();
+  delayHandler(inputDelayValue);
 
-  const promise = radioStateValue.checked
-    ? Promise.resolve(`✅ Fulfilled promise in ${inputDelayValue}ms`)
-    : Promise.reject(`❌ Rejected promise in ${inputDelayValue}ms`);
+  function delayHandler(delay) {
+    if (delay > 0) {
+      setTimeout(() => {
+        promise;
+      }, delay);
+      const promise = radioStateValue.checked
+        ? Promise.resolve(`✅ Fulfilled promise in ${inputDelayValue}ms`)
+        : Promise.reject(`❌ Rejected promise in ${inputDelayValue}ms`);
 
-  promise
-    .then(
-      iziToast.show({
-        title: `✅ Fulfilled promise in ${inputDelayValue}ms`,
-      })
-    )
-    .catch(
-      iziToast.show({
-        title: `❌ Rejected promise in ${inputDelayValue}ms`,
-      })
-    );
+      promise
+        .then(value => {
+          iziToast.show({
+            message: value,
+            backgroundColor: 'rgba(82, 223, 79, 0.3)',
+            position: 'topRight',
+          });
+        })
+        .catch(value => {
+          iziToast.show({
+            message: value,
+            backgroundColor: 'rgba(223, 79, 79, 0.3)',
+            position: 'topRight',
+          });
+        });
+    }
+  }
 }
