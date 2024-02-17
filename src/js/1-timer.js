@@ -29,7 +29,7 @@ const options = {
         message: 'Please choose a date in the future',
         backgroundColor: 'rgb(236, 56, 56)',
         messageColor: '#FFF',
-        position: 'center',
+        position: 'topCenter',
       });
     } else {
       buttonStart.removeAttribute('disabled');
@@ -65,7 +65,7 @@ function handlerBtnStart() {
       message: 'Please choose a date in the future',
       backgroundColor: 'rgb(236, 56, 56)',
       messageColor: '#FFF',
-      position: 'center',
+      position: 'topCenter',
     });
     buttonStart.setAttribute('disabled', '');
   }

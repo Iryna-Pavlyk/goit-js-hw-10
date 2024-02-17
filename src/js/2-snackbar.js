@@ -31,14 +31,14 @@ function handlerSubmit(event) {
           iziToast.show({
             message: value,
             backgroundColor: 'rgba(82, 223, 79, 0.3)',
-            position: 'topRight',
+            position: 'topCenter',
           });
         })
         .catch(value => {
           iziToast.show({
             message: value,
             backgroundColor: 'rgba(223, 79, 79, 0.3)',
-            position: 'topRight',
+            position: 'topCenter',
           });
         });
     }
