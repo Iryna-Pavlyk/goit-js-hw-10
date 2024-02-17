@@ -12,7 +12,7 @@ function handlerSubmit(event) {
   const inputDelayValue = event.target.elements.delay.value;
   //   console.log(inputDelayValue);
   const radioStateValue = event.target.elements.state.value;
-  //   console.log(radioStateValue);
+  console.log(radioStateValue);
   event.target.reset();
   delayHandler(inputDelayValue);
 
@@ -21,9 +21,10 @@ function handlerSubmit(event) {
       setTimeout(() => {
         promise;
       }, delay);
-      const promise = radioStateValue.checked
-        ? Promise.resolve(`✅ Fulfilled promise in ${inputDelayValue}ms`)
-        : Promise.reject(`❌ Rejected promise in ${inputDelayValue}ms`);
+      const promise =
+        radioStateValue === 'fulfilled'
+          ? Promise.resolve(`✅ Fulfilled promise in ${inputDelayValue}ms`)
+          : Promise.reject(`❌ Rejected promise in ${inputDelayValue}ms`);
 
       promise
         .then(value => {
