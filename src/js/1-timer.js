@@ -25,10 +25,16 @@ const options = {
   onClose([selectedDates]) {
     if (selectedDates < options.defaultDate) {
       buttonStart.setAttribute('disabled', '');
-      alert('Please choose a date in the future');
+      iziToast.show({
+        message: 'Please choose a date in the future',
+        backgroundColor: 'rgb(236, 56, 56)',
+        messageColor: '#FFF',
+        position: 'center',
+      });
+    } else {
+      buttonStart.removeAttribute('disabled');
+      userSelectedDate = selectedDates.getTime();
     }
-    buttonStart.removeAttribute('disabled');
-    userSelectedDate = selectedDates.getTime();
   },
 };
 
@@ -36,18 +42,47 @@ flatpickr(datatimeInput, options);
 
 buttonStart.addEventListener('click', handlerBtnStart);
 
-let interval;
 function handlerBtnStart() {
-  buttonStart.setAttribute('disabled', '');
-  datatimeInput.setAttribute('disabled', '');
-  // const stopTime = Date.now();
-  interval = setInterval(() => {
-    // const currentTime = Date.now();
-    const delta = userSelectedDate - Date.now();
-    const time = convertMs(delta);
-    console.log(time);
-  }, 1000);
+  if (userSelectedDate > Date.now()) {
+    const timerCalc = () => {
+      outputsUpdate(
+        [daysData, hoursData, minutesData, secondsData],
+        convertMs(userSelectedDate - Date.now())
+      );
+      if (
+        userSelectedDate - 1000 < Date.now() &&
+        secondsData.textContent === '00'
+      )
+        clearInterval(interval);
+    };
+    timerCalc();
+    const interval = setInterval(timerCalc, 1000);
+    buttonStart.setAttribute('disabled', '');
+    datatimeInput.setAttribute('disabled', '');
+    buttonStart.dataset.start = 'started';
+  } else {
+    iziToast.show({
+      message: 'Please choose a date in the future',
+      backgroundColor: 'rgb(236, 56, 56)',
+      messageColor: '#FFF',
+      position: 'center',
+    });
+    buttonStart.setAttribute('disabled', '');
+  }
 }
+
+const outputUpdate = (output, time) => {
+  output.textContent = time.toString().padStart(2, '0');
+};
+const outputsUpdate = (
+  [daysData, hoursData, minutesData, secondsData],
+  { days, hours, minutes, seconds }
+) => {
+  outputUpdate(daysData, days);
+  outputUpdate(hoursData, hours);
+  outputUpdate(minutesData, minutes);
+  outputUpdate(secondsData, seconds);
+};
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
