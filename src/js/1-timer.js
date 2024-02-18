@@ -24,7 +24,7 @@ const options = {
   minuteIncrement: 1,
   onClose([selectedDates]) {
     if (selectedDates < options.defaultDate) {
-      buttonStart.setAttribute('disabled', '');
+      buttonStart.disabled = true;
       iziToast.show({
         message: 'Please choose a date in the future',
         backgroundColor: 'rgb(236, 56, 56)',
@@ -32,7 +32,7 @@ const options = {
         position: 'topCenter',
       });
     } else {
-      buttonStart.removeAttribute('disabled');
+      buttonStart.disabled = false;
       userSelectedDate = selectedDates.getTime();
     }
   },
@@ -57,8 +57,8 @@ function handlerBtnStart() {
     };
     timerCalc();
     const interval = setInterval(timerCalc, 1000);
-    buttonStart.setAttribute('disabled', '');
-    datatimeInput.setAttribute('disabled', '');
+    buttonStart.disabled = true;
+    datatimeInput.disabled = true;
     buttonStart.dataset.start = 'started';
   } else {
     iziToast.show({
@@ -67,7 +67,7 @@ function handlerBtnStart() {
       messageColor: '#FFF',
       position: 'topCenter',
     });
-    buttonStart.setAttribute('disabled', '');
+    buttonStart.disabled = true;
   }
 }
 
